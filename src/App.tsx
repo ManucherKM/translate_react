@@ -2,7 +2,7 @@ import Translate from "./components/Translate/Translate"
 
 const App = () => {
   return (
-    <div>
+    <div className="app">
       <Translate />
     </div>
   )

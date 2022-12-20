@@ -1,8 +1,10 @@
 import axios from "axios";
 import { FC, useState } from "react"
 import { ITranslate } from "../../types/types";
+import Button from "../Button/Button";
 import TranslateInput from "../TranslateInput/TranslateInput";
 import TranslateOutput from "../TranslateOutput/TranslateOutput";
+import s from "./Translate.module.scss";
 
 const Translate: FC = () => {
     const [output, setOutput] = useState<string>("");
@@ -28,17 +30,58 @@ const Translate: FC = () => {
         setText(data.responseData.translatedText)
     }
 
+    function focusHandler() {
+
+    }
+
     return (
-        <div className="app">
-            <TranslateInput
-                text={input}
-                setText={setInput}
-            />
-            <TranslateOutput
-                text={output}
-            />
-            <button onClick={clickHandler}>run</button>
-        </div>
+        <>
+            <nav className={s.navbar}>
+                <div className="container">
+                    <div className={s.navbar__wrapper}>
+                        <div className={s.navbar__logo}>
+                            <div className={s.logo__wrapper}>
+                                <span className={s.logo__text}>
+                                    TS
+                                </span>
+                            </div>
+                        </div>
+                        <div className={s.navbar__navigate}>
+                            <a
+                                className={s.github}
+                                target="_blank"
+                                href="https://github.com/ManucherKM/translate_react"
+                            >
+                                Github
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div className={s.translate}>
+                <div className="container">
+                    <div className={s.translate__wrapper}>
+                        <div onFocus={focusHandler} className={s.translate__input}>
+                            <TranslateInput
+                                text={input}
+                                setText={setInput}
+                            />
+                        </div>
+                        <div className={s.translate__output}>
+                            <TranslateOutput
+                                text={output}
+                            />
+                        </div>
+                    </div>
+                    <div className={s.translate__button}>
+                        <Button
+                            text="Превести"
+                            onClick={clickHandler}
+                        />
+                    </div>
+                </div>
+            </div>
+        </>
     )
 }
 

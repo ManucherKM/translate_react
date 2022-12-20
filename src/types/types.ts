@@ -5,3 +5,10 @@ export interface ITranslate {
 interface ITranslateText {
     translatedText: string
 }
+
+
+export interface IButton {
+    text: string,
+    onClick: () => void,
+    isDisabled?: boolean
+}
