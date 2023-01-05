@@ -9,8 +9,9 @@
 
 ## Web application
 
-[Translate_react]()
+[Translate_react](https://translate-pink.vercel.app)
 
 ## Preview
 
-[![Layout]()]()
+[![Layout](https://github.com/ManucherKM/translate_react/blob/main/preview/en.png?raw=true)](https://translate-pink.vercel.app)
+[![Layout](https://github.com/ManucherKM/translate_react/blob/main/preview/ru.png?raw=true)](https://translate-pink.vercel.app)
