@@ -1,14 +1,13 @@
-import { FC, useState } from "react";
-
-interface ITranslateOutput {
-    text: string
-}
+import { FC } from "react";
+import { ITranslateOutput } from "../../types/types";
+import s from "./TranslateOutput.module.scss"
 
 const TranslateOutput: FC<ITranslateOutput> = ({ text }) => {
-
     return (
         <div>
-            {text}
+            <p className={s.text}>
+                {text}
+            </p>
         </div>
     )
 }

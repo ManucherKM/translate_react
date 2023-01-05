@@ -2,19 +2,32 @@ import axios from "axios";
 import { FC, useState } from "react"
 import { ITranslate } from "../../types/types";
 import Button from "../Button/Button";
+import Loader from "../Loader/Loader";
 import TranslateInput from "../TranslateInput/TranslateInput";
 import TranslateOutput from "../TranslateOutput/TranslateOutput";
 import s from "./Translate.module.scss";
 
 const Translate: FC = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    // allowed 80 language from ISO-631
+    const [languageMode, setLanguageMode] = useState<string>("en|ru");
+
     const [output, setOutput] = useState<string>("");
     const [input, setInput] = useState<string>("");
 
-    function clickHandler() {
-        getTranslate("en|ru", input, setOutput)
+    async function clickHandler() {
+        setIsLoading(true)
+        await getTranslate(languageMode, input, setOutput);
+        setIsLoading(false)
     }
 
     async function getTranslate(langpair: string, text: string, setText: (val: string) => void) {
+        setIsLoading(true)
+        if (!langpair || !text || !setText) {
+            setIsLoading(false)
+            return
+        }
         const options = {
             method: 'GET',
             url: 'https://translated-mymemory---translation-memory.p.rapidapi.com/get',
@@ -28,10 +41,16 @@ const Translate: FC = () => {
         const { data } = await axios.request<ITranslate>(options);
 
         setText(data.responseData.translatedText)
+        setIsLoading(false)
     }
 
-    function focusHandler() {
+    function switchLanguage() {
+        if (languageMode === "en|ru") {
+            setLanguageMode("ru|en")
+        } else {
+            setLanguageMode("en|ru")
 
+        }
     }
 
     return (
@@ -50,6 +69,7 @@ const Translate: FC = () => {
                             <a
                                 className={s.github}
                                 target="_blank"
+                                rel="noreferrer"
                                 href="https://github.com/ManucherKM/translate_react"
                             >
                                 Github
@@ -61,16 +81,36 @@ const Translate: FC = () => {
             <div className={s.translate}>
                 <div className="container">
                     <div className={s.translate__wrapper}>
-                        <div onFocus={focusHandler} className={s.translate__input}>
+                        <div className={s.translate__input}>
+                            <div onClick={switchLanguage} className={s.translate__lang}>
+                                <span>
+                                    {languageMode === "ru|en"
+                                        ? "Russian"
+                                        : "English"
+                                    }
+                                </span>
+                            </div>
                             <TranslateInput
+                                onEnter={() => getTranslate(languageMode, input, setOutput)}
                                 text={input}
                                 setText={setInput}
                             />
                         </div>
                         <div className={s.translate__output}>
-                            <TranslateOutput
-                                text={output}
-                            />
+                            <div onClick={switchLanguage} className={s.translate__lang}>
+                                <span>
+                                    {languageMode === "en|ru"
+                                        ? "Russian"
+                                        : "English"
+                                    }
+                                </span>
+                            </div>
+                            {isLoading && <Loader />}
+                            {!isLoading &&
+                                <TranslateOutput
+                                    text={output}
+                                />
+                            }
                         </div>
                     </div>
                     <div className={s.translate__button}>

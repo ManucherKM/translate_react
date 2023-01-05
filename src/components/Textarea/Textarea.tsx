@@ -1,45 +1,30 @@
-import { ChangeEvent, FC, useState, useRef } from "react"
+import { ChangeEvent, FC, KeyboardEvent } from "react"
+import { ITextarea } from "../../types/types";
 import s from "./Textarea.module.scss";
 
-interface ITextarea {
-    text: string,
-    setText: (val: string) => void,
-    cols: number,
-    rows: number,
-    id?: string,
-    name?: string,
-    onFocus?: () => void
-}
-
-const Textarea: FC<ITextarea> = ({ text, setText, cols, rows, id = "", name = "", onFocus = () => { } }) => {
-
-    const [styles, setStyles] = useState<string>(s.textarea__default);
+const Textarea: FC<ITextarea> = ({ text, setText, cols, rows, id = "", name = "", onEnter = () => { } }) => {
 
     function changeHandler(e: ChangeEvent<HTMLTextAreaElement>) {
         setText(e.target.value);
     }
 
-    const textarea = useRef(null);
-
-    function focusHandler() {
-    //     if (textarea.current) {
-    //         textarea.current.focus();
-            
-    //     }
-     
+    function downEnter(e: KeyboardEvent) {
+        if (e.key === "Enter") {
+            onEnter()
+        }
     }
 
     return (
         <>
             <textarea
-                ref={textarea}
                 value={text}
                 onChange={changeHandler}
+                onKeyDown={downEnter}
                 name={name}
                 id={id}
                 cols={cols}
                 rows={rows}
-                className={styles}
+                className={s.textarea__default}
             ></textarea>
         </>
     )

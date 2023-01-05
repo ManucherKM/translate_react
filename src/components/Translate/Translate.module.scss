@@ -43,8 +43,10 @@
     .translate__wrapper {
         display: flex;
         justify-content: space-between;
+        position: relative;
 
         .translate__input {
+            border-radius: 0.5rem;
             padding: 10px;
             border: 2px solid #f65b00;
             width: 46%;
@@ -52,9 +54,21 @@
         }
 
         .translate__output {
+            border-radius: 0.5rem;
             padding: 10px;
             border: 2px solid #f65b00;
             width: 46%;
+        }
+
+        .translate__lang {
+            border-radius: 0.3rem;
+            background: rgb(223, 223, 223);
+            width: min-content;
+            padding: 2px 5px;
+            position: absolute;
+            top: -35px;
+            cursor: pointer;
+            user-select: none;
         }
     }
 
